@@ -1,9 +1,12 @@
 import express from "express";
+import matchesRouter from "./routes/matches";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+app.use("/matches", matchesRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the server");

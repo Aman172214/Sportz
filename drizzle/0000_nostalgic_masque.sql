@@ -1,0 +1,1 @@
+CREATE TYPE "public"."match_status" AS ENUM('scheduled', 'live', 'finished');
