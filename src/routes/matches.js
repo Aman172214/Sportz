@@ -15,7 +15,7 @@ matchesRouter.get("/", async (req, res) => {
   if (!parsed.success)
     return res.status(400).json({
       error: "Invalid Query",
-      details: JSON.stringify(parsed.error),
+      details: parsed.error.issues,
     });
 
   const limit = Math.min(parsed.data.limit ?? 50, 100);
@@ -29,8 +29,8 @@ matchesRouter.get("/", async (req, res) => {
     res.json({ data });
   } catch (error) {
     res.status(500).json({
-      error: "Failed to create match",
-      details: JSON.stringify(error),
+      error: "Failed to fetch matches",
+      details: error.message,
     });
   }
 });
@@ -40,7 +40,7 @@ matchesRouter.post("/", async (req, res) => {
   if (!parsed.success)
     return res.status(400).json({
       error: "Invalid Payload",
-      details: JSON.stringify(parsed.error),
+      details: parsed.error.issues,
     });
 
   try {
@@ -52,7 +52,7 @@ matchesRouter.post("/", async (req, res) => {
         endTime: new Date(parsed.data.endTime),
         homeScore: parsed.data.homeScore ?? 0,
         awayScore: parsed.data.awayScore ?? 0,
-        status: getMatchStatus(startTime, endTime),
+        status: getMatchStatus(parsed.data.startTime, parsed.data.endTime),
       })
       .returning();
 
@@ -60,7 +60,7 @@ matchesRouter.post("/", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: "Failed to create match",
-      details: JSON.stringify(error),
+      details: error.message,
     });
   }
 });
