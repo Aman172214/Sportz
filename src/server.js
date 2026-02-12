@@ -1,5 +1,5 @@
 import express from "express";
-import matchesRouter from "./routes/matches";
+import matchesRouter from "./routes/matches.js";
 
 const app = express();
 const port = 3000;
