@@ -1,5 +1,5 @@
 import { WebSocket, WebSocketServer } from "ws";
-import { wsArcjet } from "../config/arcjet";
+import { wsArcjet } from "../config/arcjet.js";
 
 const sendJson = (socket, payload) => {
   if (socket.readyState !== WebSocket.OPEN) return;
@@ -36,6 +36,7 @@ export const webSocketServer = (server) => {
       } catch (error) {
         console.error("WS connection error", error);
         socket.close(1011, "Server security error");
+        return;
       }
     }
 

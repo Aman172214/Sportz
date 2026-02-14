@@ -1,7 +1,7 @@
 import arcjet, { detectBot, shield, slidingWindow } from "@arcjet/node";
 
 const arcjetKey = process.env.ARCJET_KEY;
-const arcjetMode = process.env.ARCJET_MODE === "DRY_RUN" ? "DRY_RUN" : "Live";
+const arcjetMode = process.env.ARCJET_MODE === "DRY_RUN" ? "DRY_RUN" : "LIVE";
 
 if (!arcjetKey) throw new Error("Arcjet key not found in .env");
 
@@ -47,7 +47,7 @@ export const securityMiddleware = () => {
       }
     } catch (error) {
       console.error("Arcjet middleware error", error);
-      res.status(503).json({ error: "Service Unavailable" });
+      return res.status(503).json({ error: "Service Unavailable" });
     }
     next();
   };
